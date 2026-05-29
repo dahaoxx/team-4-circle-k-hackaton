@@ -90,7 +90,7 @@ export function RouteScreen() {
               <img
                 src={ahead.photo}
                 alt={ahead.name}
-                className="h-40 w-full rounded-xl object-cover"
+                className="h-40 w-full rounded-xl object-cover object-[center_18%]"
               />
               <div>
                 <h2 className="font-display text-lg font-semibold text-[#2b2626]">{ahead.name}</h2>

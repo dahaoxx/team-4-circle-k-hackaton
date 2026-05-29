@@ -25,7 +25,7 @@ export const PLACES: Record<string, KvilPlace> = {
     fastChargerKw: 150,
     estWaitMin: 2,
     amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: true },
-    photo: '/boller.png',
+    photo: '/bakeriet-lom.png',
     menu: [
       { id: 'lombolle', name: 'Lom-bolle', priceNok: 39, sourcing: 'Bakt i Lom i dag', readyMin: 4, signature: true },
       { id: 'skulebolle', name: 'Skulebolle', priceNok: 42, sourcing: 'Vaniljekrem & melis', readyMin: 4 },

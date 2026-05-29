@@ -37,8 +37,8 @@ export function PlaceScreen() {
   return (
     <div data-place={place.id} className="flex min-h-full flex-col bg-[var(--place-bg)]">
       {/* Hero */}
-      <div className="relative h-48">
-        <img src={place.photo} alt={place.name} className="h-full w-full object-cover" />
+      <div className="relative h-[242px]">
+        <img src={place.photo} alt={place.name} className="h-full w-full object-cover object-[center_40%]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/65 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-5 text-white">
           <p className="text-xs uppercase tracking-[0.2em] opacity-85">{place.tagline}</p>
