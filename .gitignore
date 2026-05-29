@@ -1,0 +1,16 @@
+# .NET build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+
+# Rider / JetBrains
+.idea/
+
+# macOS
+.DS_Store
+
+# Local secrets / env overrides
+appsettings.*.local.json
+*.env
