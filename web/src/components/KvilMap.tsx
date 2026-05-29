@@ -45,19 +45,23 @@ function tileLayer(): L.TileLayer {
   return L.tileLayer(CARTO_LIGHT, { attribution: CARTO_ATTRIB })
 }
 
-/** Branded teardrop pin coloured per place via the --place-accent token (tokens.css). */
-function pinIcon(place: KvilPlace): L.DivIcon {
-  return L.divIcon({
-    className: '', // drop Leaflet's default styling
-    html: `<span data-place="${place.id}" style="
-      display:block;width:22px;height:22px;
-      border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-      background:var(--place-accent);border:2px solid #fff;
-      box-shadow:0 2px 6px rgba(0,0,0,0.35);"></span>`,
-    iconSize: [22, 22],
-    iconAnchor: [11, 22],
-  })
-}
+// POI markers from the design (public/poi-*.svg). Both SVGs are 56×68 with the
+// pin tip at (28, 45.5) — i.e. 50% across, ~67% down — so the anchors below put
+// the tip exactly on the coordinate.
+//  • poi-new — the white "K" pin for curated Kvil places (prominent)
+//  • poi-ck  — the red Circle K pin for every other station (smaller)
+const KVIL_ICON = L.icon({
+  iconUrl: '/poi-new.svg',
+  iconSize: [34, 41],
+  iconAnchor: [17, 27],
+  tooltipAnchor: [0, -26],
+})
+const CK_ICON = L.icon({
+  iconUrl: '/poi-ck.svg',
+  iconSize: [22, 27],
+  iconAnchor: [11, 18],
+  tooltipAnchor: [0, -16],
+})
 
 /** RouteScreen map hero — Kvil places on a free Leaflet basemap (or the designer's theme). */
 export function KvilMap({ places }: { places: KvilPlace[] }) {
@@ -100,15 +104,7 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
       group.clearLayers()
       stations.forEach((s) => {
         if (!s.lat || !s.lng) return // skip missing/zero coords
-        L.circleMarker([s.lat, s.lng], {
-          radius: 4,
-          color: '#8a8378',
-          weight: 1,
-          fillColor: '#a39c90',
-          fillOpacity: 0.5,
-          opacity: 0.5,
-          interactive: true,
-        })
+        L.marker([s.lat, s.lng], { icon: CK_ICON, title: s.name, opacity: 0.95 })
           .bindTooltip(s.name, { direction: 'top' })
           .addTo(group)
       })
@@ -126,7 +122,8 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
 
     group.clearLayers()
     places.forEach((p) => {
-      L.marker([p.lat, p.lng], { icon: pinIcon(p), title: p.name })
+      L.marker([p.lat, p.lng], { icon: KVIL_ICON, title: p.name })
+        .bindTooltip(p.name, { direction: 'top' })
         .on('click', () => navigate(`/place/${p.id}`))
         .addTo(group)
     })
@@ -140,7 +137,7 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
   return (
     <div
       ref={containerRef}
-      className="h-44 w-full overflow-hidden rounded-2xl border border-[var(--kvil-line)]"
+      className="h-60 w-full overflow-hidden rounded-2xl border border-[var(--kvil-line)]"
     />
   )
 }

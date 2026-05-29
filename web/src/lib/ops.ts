@@ -6,12 +6,12 @@
 import type { OpsStation } from './types'
 
 export const FIXTURE_OPS_STATIONS: OpsStation[] = [
-  { stationId: 'CK-NO-010', name: 'Lørenskog (Nebbenes)', region: 'Østlandet', isKvil: true, signature: 'Eit ekte bakeri med ein bolle verd E6-svingen' },
-  { stationId: 'CK-NO-021', name: 'Ålesund (Lærdal)', region: 'Vestlandet', isKvil: true, signature: 'Lokal sider, røykt aure, eple' },
-  { stationId: 'CK-NO-028', name: 'Trysil (Dombås)', region: 'Innlandet', isKvil: true, signature: 'Fjellstove med peis' },
-  { stationId: 'CK-NO-022', name: 'Bodø (Lofoten)', region: 'Nord-Norge', isKvil: true, signature: 'Kaffi, torsk og lyset' },
+  { stationId: 'CK-NO-028', name: 'Lom (Bakeriet)', region: 'Innlandet', isKvil: true, signature: 'Boller fylt med vaniljekrem, toppa med sprø melis' },
+  { stationId: 'CK-NO-010', name: 'Ringebu (Annis Pølsemakeri)', region: 'Innlandet', isKvil: true, signature: 'Lokalt spekt pølse frå Gudbrandsdalen' },
+  { stationId: 'CK-NO-021', name: 'Vinje (Mjonøy)', region: 'Telemark', isKvil: true, signature: 'Rømmegraut og spekemat frå Vinje' },
+  { stationId: 'CK-NO-022', name: 'Luster (Lustrabui)', region: 'Vestland', isKvil: true, signature: 'Røykt aure og eple frå fjorden' },
   { stationId: 'CK-NO-014', name: 'Hamar sentrum', region: 'Innlandet', isKvil: false, signature: '' },
-  { stationId: 'CK-NO-031', name: 'Voss stasjon', region: 'Vestlandet', isKvil: false, signature: '' },
+  { stationId: 'CK-NO-009', name: 'Voss stasjon', region: 'Vestland', isKvil: false, signature: '' },
 ]
 
 /** Headline KPIs for the Ops dashboard (Epic 4.4). */

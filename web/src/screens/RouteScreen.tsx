@@ -48,7 +48,7 @@ export function RouteScreen() {
     api.getPlaces().then((r) => setPlaces(r.data))
   }, [])
 
-  const ahead = places.find((p) => p.id === 'laerdal') ?? places[0]
+  const ahead = places.find((p) => p.id === 'lom') ?? places[0]
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -73,30 +73,7 @@ export function RouteScreen() {
     <Screen>
       <PageHeader eyebrow="På vegen" title="Ta deg ein kvil" sub="Vel kvar du stoppar — med vilje" />
 
-      {/* Search */}
-      <label className="flex w-full items-center gap-2 rounded-2xl border border-[var(--kvil-card-line)] bg-white px-4 py-3 text-[var(--kvil-text-soft)] shadow-[var(--kvil-glow)]">
-        <SearchIcon />
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Søk etter et sted å kvile..."
-          className="w-full bg-transparent text-sm text-[#171616] outline-none placeholder:text-[var(--kvil-text-soft)]"
-        />
-      </label>
-
-      {/* Map of Kvil places */}
-      <KvilMap places={places} />
-
-      {/* Filters (Epic 1.2) */}
-      <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1">
-        {FILTERS.map((f) => (
-          <Pill key={f.key} icon={f.icon} active={active.has(f.key)} onClick={() => toggle(f.key)}>
-            {f.label}
-          </Pill>
-        ))}
-      </div>
-
-      {/* Recommended place ahead (Epic 1.1) */}
+      {/* Recommended place ahead — image on top (Figma node 2:279) (Epic 1.1) */}
       {ahead && (
         <Link to={`/place/${ahead.id}`} className="block">
           <AICard glow>
@@ -110,6 +87,11 @@ export function RouteScreen() {
                   {ahead.detourMin} min fram
                 </span>
               </div>
+              <img
+                src={ahead.photo}
+                alt={ahead.name}
+                className="h-40 w-full rounded-xl object-cover"
+              />
               <div>
                 <h2 className="font-display text-lg font-semibold text-[#2b2626]">{ahead.name}</h2>
                 <p className="text-sm text-[var(--kvil-text-soft)]">{ahead.signature}</p>
@@ -127,6 +109,29 @@ export function RouteScreen() {
           </AICard>
         </Link>
       )}
+
+      {/* Map of Kvil places */}
+      <KvilMap places={places} />
+
+      {/* Search */}
+      <label className="flex w-full items-center gap-2 rounded-2xl border border-[var(--kvil-card-line)] bg-white px-4 py-3 text-[var(--kvil-text-soft)] shadow-[var(--kvil-glow)]">
+        <SearchIcon />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Søk etter et sted å kvile..."
+          className="w-full bg-transparent text-sm text-[#171616] outline-none placeholder:text-[var(--kvil-text-soft)]"
+        />
+      </label>
+
+      {/* Filters (Epic 1.2) */}
+      <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1">
+        {FILTERS.map((f) => (
+          <Pill key={f.key} icon={f.icon} active={active.has(f.key)} onClick={() => toggle(f.key)}>
+            {f.label}
+          </Pill>
+        ))}
+      </div>
 
       {/* The collection (Epic 1.1 → 1.3) */}
       <section className="flex flex-col gap-2">

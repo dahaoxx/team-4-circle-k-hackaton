@@ -22,7 +22,7 @@ export function PlaceScreen() {
   const { placeId } = useParams()
   const navigate = useNavigate()
   const { member, collected } = useKvil()
-  const place = (placeId && PLACES[placeId]) || PLACES.nebbenes
+  const place = (placeId && PLACES[placeId]) || PLACES.lom
 
   const isUsualPlace = member.usual.placeId === place.id
   const visited = collected.includes(place.id)

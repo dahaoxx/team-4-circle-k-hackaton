@@ -40,7 +40,7 @@ export function StayScreen() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const { member, collectPlace, collected } = useKvil()
-  const place = PLACES[params.get('place') ?? ''] ?? PLACES.laerdal
+  const place = PLACES[params.get('place') ?? ''] ?? PLACES.lom
 
   const [estimate, setEstimate] = useState<ChargeEstimate | null>(null)
   useEffect(() => {

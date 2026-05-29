@@ -1,109 +1,110 @@
 /**
- * The Kvil place catalogue — narrative places mapped onto real dataset stations.
+ * The Kvil place catalogue — the v2 Tier-3 places (see
+ * `docs/Kvil — ta deg ein kvil v2.md`): real Norwegian destinations, each
+ * mapped onto a dataset station so the stats stay genuine.
  * This is the single source of truth shared by screens and fixtures.
- * See docs/implementation-plan.md §2.
  */
 import type { KvilPlace } from './types'
 
 export const PLACES: Record<string, KvilPlace> = {
-  nebbenes: {
-    id: 'nebbenes',
-    name: 'Bakeriet på Nebbenes',
-    stationId: 'CK-NO-010', // Circle K Lørenskog (motorway, 15 chargers, kitchen+seating)
-    city: 'Lørenskog',
-    region: 'Østlandet',
-    host: 'Ingrid',
-    signature: 'Eit ekte bakeri med ein bolle verd E6-svingen',
-    tagline: 'Noregs travlaste raststad, tenkt på nytt',
-    lat: 60.3225, // Nebbenes rest stop, E6 north of Oslo
-    lng: 11.1772,
-    baysFree: 6,
+  lom: {
+    id: 'lom',
+    name: 'Bakeriet i Lom',
+    stationId: 'CK-NO-028', // Innlandet / Gudbrandsdalen station
+    city: 'Lom',
+    region: 'Innlandet',
+    host: 'Marit',
+    signature: 'Boller fylt med vaniljekrem, toppa med sprø melis',
+    tagline: 'Originalen — bakeriet folk køyrer av for',
+    lat: 61.8389, // Lom, Gudbrandsdalen
+    lng: 8.5669,
+    baysFree: 5,
+    baysTotal: 6,
+    topCategories: ['Bakeri', 'Kaffi', 'Boller'],
+    detourMin: 35,
+    fastChargerKw: 150,
+    estWaitMin: 2,
+    amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: true },
+    photo: '/boller.png',
+    menu: [
+      { id: 'lombolle', name: 'Lom-bolle', priceNok: 39, sourcing: 'Bakt i Lom i dag', readyMin: 4, signature: true },
+      { id: 'skulebolle', name: 'Skulebolle', priceNok: 42, sourcing: 'Vaniljekrem & melis', readyMin: 4 },
+      { id: 'kanelsnurr', name: 'Kanelsnurr', priceNok: 42, sourcing: 'Surdeig, lokalt smør', readyMin: 5 },
+    ],
+  },
+  ringebu: {
+    id: 'ringebu',
+    name: 'Annis Pølsemakeri på Ringebu',
+    stationId: 'CK-NO-010', // E6 motorway station, kitchen + many chargers
+    city: 'Ringebu',
+    region: 'Innlandet',
+    host: 'Anni',
+    signature: 'Lokalt spekt pølse frå Gudbrandsdalen',
+    tagline: 'Pølsa som er grunnen til at du stoppar',
+    lat: 61.5283, // Ringebu, E6 Gudbrandsdalen
+    lng: 10.1389,
+    baysFree: 8,
     baysTotal: 15,
-    topCategories: ['Bakeri', 'Kaffi', 'Varmmat'],
-    detourMin: 12,
+    topCategories: ['Pølser', 'Spekemat', 'Kaffi'],
+    detourMin: 8,
     fastChargerKw: 350,
     estWaitMin: 4,
     amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: true },
     photo: '/boller.png',
     menu: [
-      { id: 'lombolle', name: 'Lom-bolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4, signature: true },
-      { id: 'kanelsnurr', name: 'Kanelsnurr', priceNok: 42, sourcing: 'Surdeig, lokalt smør', readyMin: 5 },
-      { id: 'kardemomme', name: 'Kardemommebolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4 },
+      { id: 'gudbrandsdalspolse', name: 'Gudbrandsdalspølse', priceNok: 79, sourcing: 'Lokalt spekt i Ringebu', readyMin: 5, signature: true },
+      { id: 'polselompe', name: 'Pølse i lompe', priceNok: 59, sourcing: 'Heimelaga lompe', readyMin: 4 },
+      { id: 'fenalar', name: 'Fenalår-snabben', priceNok: 89, sourcing: 'Frå Gudbrandsdalen', readyMin: 3 },
     ],
   },
-  laerdal: {
-    id: 'laerdal',
-    name: 'Brygga i Lærdal',
-    stationId: 'CK-NO-021', // Circle K Ålesund (Vestlandet, kitchen+seating)
-    city: 'Ålesund',
-    region: 'Vestlandet',
-    host: 'Sander',
-    signature: 'Lokal sider, røykt aure, eple',
-    tagline: 'Ein fjordstopp som smakar av fjorden',
-    lat: 61.1006, // Lærdal, inner Sognefjord
-    lng: 7.4806,
-    baysFree: 4,
+  mjonoy: {
+    id: 'mjonoy',
+    name: 'Mjonøy i Vinje',
+    stationId: 'CK-NO-021', // E134 corridor station
+    city: 'Vinje',
+    region: 'Telemark',
+    host: 'Targjei',
+    signature: 'Rømmegraut og spekemat frå Vinje',
+    tagline: 'Tradisjon ved E134, mellom to Circle K',
+    lat: 59.5667, // Vinje, Telemark (E134)
+    lng: 7.9833,
+    baysFree: 3,
     baysTotal: 5,
-    topCategories: ['Lokalmat', 'Kaffi', 'Sider'],
-    detourMin: 40,
+    topCategories: ['Tradmat', 'Rømmegraut', 'Kaffi'],
+    detourMin: 20,
     fastChargerKw: 150,
     estWaitMin: 0,
-    amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: false },
-    photo: '/boller.png',
-    menu: [
-      { id: 'aure', name: 'Røykt aure-smørbrød', priceNok: 89, sourcing: 'Røykt i Lærdal', readyMin: 6, signature: true },
-      { id: 'sider', name: 'Lærdalseple-sider', priceNok: 59, sourcing: 'Pressa på garden', readyMin: 1 },
-      { id: 'flatbrod', name: 'Flatbrød & brunost', priceNok: 49, sourcing: 'Bakt på staden', readyMin: 3 },
-    ],
-  },
-  dombas: {
-    id: 'dombas',
-    name: 'Stova på Dombås',
-    stationId: 'CK-NO-028', // Circle K Trysil (Innlandet, highway_destination)
-    city: 'Trysil',
-    region: 'Innlandet',
-    host: 'Marit',
-    signature: 'Eit fjellstove-rom for Dovre-kryssinga — med peis',
-    tagline: 'Pausen som varmar kryssinga',
-    lat: 62.0742, // Dombås, gateway to the Dovre crossing
-    lng: 9.1281,
-    baysFree: 3,
-    baysTotal: 6,
-    topCategories: ['Varm drikke', 'Bakeri', 'Varmmat'],
-    detourMin: 25,
-    fastChargerKw: 150,
-    estWaitMin: 2,
     amenities: { kitchen: true, fireplace: true, seating: true, wifi: true, carwash: false },
     photo: '/boller.png',
     menu: [
-      { id: 'fjellgrot', name: 'Fjellgrøt med rømme', priceNok: 79, sourcing: 'Havre frå Dovre', readyMin: 7, signature: true },
-      { id: 'kakao', name: 'Varm kakao med krem', priceNok: 49, sourcing: 'Laga på staden', readyMin: 3 },
-      { id: 'lapper', name: 'Lapper med tyttebær', priceNok: 55, sourcing: 'Tyttebær frå fjellet', readyMin: 5 },
+      { id: 'rommegraut', name: 'Rømmegraut med spekemat', priceNok: 99, sourcing: 'Rømme frå Vinje', readyMin: 8, signature: true },
+      { id: 'tjukkmjolk', name: 'Tjukkmjølk & flatbrød', priceNok: 55, sourcing: 'Frå garden', readyMin: 3 },
+      { id: 'vaffel', name: 'Vaffel med brunost', priceNok: 49, sourcing: 'Lokal brunost', readyMin: 4 },
     ],
   },
-  lofoten: {
-    id: 'lofoten',
-    name: 'Kaia i Lofoten',
-    stationId: 'CK-NO-022', // Circle K Bodø (Nord-Norge, coast)
-    city: 'Bodø',
-    region: 'Nord-Norge',
-    host: 'Even',
-    signature: 'Kaffi, torsk og lyset',
-    tagline: 'Der vegen møter havet',
-    lat: 68.2342, // Kaia, Lofoten (Svolvær)
-    lng: 14.5641,
+  lustrabui: {
+    id: 'lustrabui',
+    name: 'Lustrabui i Luster',
+    stationId: 'CK-NO-022', // Vestland / fjord station
+    city: 'Luster',
+    region: 'Vestland',
+    host: 'Sigrid',
+    signature: 'Røykt aure og eple frå fjorden',
+    tagline: 'Djupt inne i Sognefjorden',
+    lat: 61.4236, // Luster, inner Sognefjord
+    lng: 7.4136,
     baysFree: 2,
     baysTotal: 4,
-    topCategories: ['Sjømat', 'Kaffi', 'Bakeri'],
-    detourMin: 60,
+    topCategories: ['Lokalmat', 'Fjordmat', 'Kaffi'],
+    detourMin: 55,
     fastChargerKw: 50,
     estWaitMin: 0,
-    amenities: { kitchen: true, fireplace: false, seating: true, wifi: false, carwash: false },
+    amenities: { kitchen: true, fireplace: true, seating: true, wifi: false, carwash: false },
     photo: '/boller.png',
     menu: [
-      { id: 'fiskekaker', name: 'Fiskekaker i lompe', priceNok: 85, sourcing: 'Torsk frå Lofoten', readyMin: 6, signature: true },
-      { id: 'bolle', name: 'Kanelbolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4 },
-      { id: 'torrfisk', name: 'Kaffi & tørrfisk-snack', priceNok: 45, sourcing: 'Hengt på Kaia', readyMin: 2 },
+      { id: 'fjordsmorbrod', name: 'Fjordsmørbrød med røykt aure', priceNok: 95, sourcing: 'Røykt i Luster', readyMin: 6, signature: true },
+      { id: 'lefse', name: 'Lefse med rømme', priceNok: 49, sourcing: 'Bakt på staden', readyMin: 3 },
+      { id: 'eplemost', name: 'Eplemost frå Sogn', priceNok: 45, sourcing: 'Pressa i fjorden', readyMin: 1 },
     ],
   },
 }

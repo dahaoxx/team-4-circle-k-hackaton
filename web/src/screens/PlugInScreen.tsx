@@ -13,7 +13,7 @@ export function PlugInScreen() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const { member } = useKvil()
-  const place = PLACES[params.get('place') ?? ''] ?? PLACES.laerdal
+  const place = PLACES[params.get('place') ?? ''] ?? PLACES.lom
 
   const [mode, setMode] = useState<'kvil' | 'snogg'>('snogg')
   const [estimate, setEstimate] = useState<ChargeEstimate | null>(null)

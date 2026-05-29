@@ -12,11 +12,11 @@ export const FIXTURE_MEMBER: MemberProfile = {
   batteryKwh: 77,
   socPct: 28,
   usual: {
-    placeId: 'nebbenes',
+    placeId: 'lom',
     itemId: 'lombolle',
     label: 'Lom-bolle + kaffi',
   },
 }
 
 /** Places already collected on the passport at the start of the demo. */
-export const INITIAL_COLLECTED = ['nebbenes', 'dombas']
+export const INITIAL_COLLECTED = ['lom', 'mjonoy']

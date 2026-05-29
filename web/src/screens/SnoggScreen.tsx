@@ -22,7 +22,7 @@ type Phase = 'menu' | 'cooking' | 'done'
 export function SnoggScreen() {
   const [params] = useSearchParams()
   const { member, placeOrder } = useKvil()
-  const place = PLACES[params.get('place') ?? ''] ?? PLACES.laerdal
+  const place = PLACES[params.get('place') ?? ''] ?? PLACES.lom
 
   // Pre-select the member's usual on a reorder deep-link.
   const reorderItem = params.get('reorder') ? params.get('item') : null

@@ -9,8 +9,8 @@ import { PLACE_LIST } from './places'
 export const FIXTURE_PLACES = PLACE_LIST
 
 export const FIXTURE_CHARGE_ESTIMATE: ChargeEstimate = {
-  stationId: 'CK-NO-021',
-  stationName: 'Brygga i Lærdal',
+  stationId: 'CK-NO-028',
+  stationName: 'Bakeriet i Lom',
   minutes: 17,
   fromSoc: 28,
   toSoc: 80,

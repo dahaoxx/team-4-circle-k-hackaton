@@ -57,7 +57,7 @@ export function HostScreen() {
       <PageHeader
         eyebrow="Vertskap"
         title="Kjøkken & ankomst"
-        sub="Brygga i Lærdal"
+        sub="Bakeriet i Lom"
       />
 
       <div className="flex gap-2">

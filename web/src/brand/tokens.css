@@ -42,8 +42,8 @@
   --place-soft: #efe7d6;
 }
 
-/* Bakeriet på Nebbenes — bakery cream */
-[data-place='nebbenes'] {
+/* Bakeriet i Lom — bakery cream */
+[data-place='lom'] {
   --place-bg: #f7efe1;
   --place-surface: #fffaf0;
   --place-ink: #3a2c1c;
@@ -51,17 +51,8 @@
   --place-soft: #efe1c8;
 }
 
-/* Brygga i Lærdal — fjord blue-green */
-[data-place='laerdal'] {
-  --place-bg: #e8f0ee;
-  --place-surface: #f6fbf9;
-  --place-ink: #14302c;
-  --place-accent: #1f6f63;
-  --place-soft: #d3e6e1;
-}
-
-/* Stova på Dombås — warm wood / amber */
-[data-place='dombas'] {
+/* Annis Pølsemakeri på Ringebu — warm wood / amber */
+[data-place='ringebu'] {
   --place-bg: #efe6db;
   --place-surface: #fbf4ea;
   --place-ink: #2e2014;
@@ -69,11 +60,20 @@
   --place-soft: #e3d2bd;
 }
 
-/* Kaia i Lofoten — cold coastal light */
-[data-place='lofoten'] {
-  --place-bg: #e9eef1;
-  --place-surface: #f7fafc;
-  --place-ink: #1a2730;
-  --place-accent: #2f6d8c;
-  --place-soft: #d6e2e9;
+/* Mjonøy i Vinje — heather / forest green */
+[data-place='mjonoy'] {
+  --place-bg: #e9eee8;
+  --place-surface: #f6faf3;
+  --place-ink: #1f2a1c;
+  --place-accent: #5a7d4f;
+  --place-soft: #d7e4cf;
+}
+
+/* Lustrabui i Luster — fjord blue-green */
+[data-place='lustrabui'] {
+  --place-bg: #e8f0ee;
+  --place-surface: #f6fbf9;
+  --place-ink: #14302c;
+  --place-accent: #1f6f63;
+  --place-soft: #d3e6e1;
 }
