@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom'
 
 const TABS = [
-  { to: '/', label: 'Vegen', sub: 'Route', end: true },
-  { to: '/kvilpasset', label: 'Passet', sub: 'Pass', end: false },
-  { to: '/host', label: 'Vert', sub: 'Host', end: false },
-  { to: '/data', label: 'Data', sub: 'Insight', end: false },
+  { to: '/', label: 'Vegen', end: true },
+  { to: '/kvilpasset', label: 'Passet', end: false },
+  { to: '/host', label: 'Vert', end: false },
+  { to: '/data', label: 'Data', end: false },
 ]
 
 export function BottomNav() {
@@ -25,7 +25,6 @@ export function BottomNav() {
           }
         >
           <span className="font-display text-sm font-semibold">{t.label}</span>
-          <span className="text-[9px] uppercase tracking-[0.18em]">{t.sub}</span>
         </NavLink>
       ))}
     </nav>

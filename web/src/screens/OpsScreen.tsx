@@ -35,7 +35,7 @@ export function OpsScreen() {
   return (
     <Screen>
       <PageHeader
-        eyebrow="Ops · Kvilested-administrasjon"
+        eyebrow="Drift · Kvilested-administrasjon"
         title="Kva stasjonar er Kvil?"
         sub={`${kvilCount} av ${stations.length} stasjonar er utnemnde til Kvilstader`}
       />

@@ -44,7 +44,7 @@ export function DataPanelScreen() {
   return (
     <Screen>
       <PageHeader
-        eyebrow="Ops · Forretningsmodell"
+        eyebrow="Drift · Forretningsmodell"
         title="Kvifor Kvil tener meir"
         sub="Frå loyalty_members, store_transactions og charging_sessions"
       />
@@ -52,7 +52,7 @@ export function DataPanelScreen() {
       {/* Spend-lift hero */}
       <AICard glow>
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--kvil-text-soft)]">
-          Premium spend-lift
+          Premium meirforbruk
         </p>
         <p className="font-display text-5xl font-semibold text-[#2b2626]">
           +{econ.spendLiftPct}%
@@ -160,7 +160,7 @@ export function DataPanelScreen() {
       <PrimaryButton to="/ops">Administrer Kvilstader</PrimaryButton>
 
       <p className="text-center text-[10px] text-[var(--kvil-text-soft)]">
-        data: {source === 'live' ? 'live proxy' : 'fixture fallback'}
+        kjelde: {source === 'live' ? 'direkte' : 'reservedata'}
       </p>
     </Screen>
   )
