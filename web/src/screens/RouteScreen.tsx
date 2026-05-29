@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
 import type { KvilPlace } from '../lib/types'
 import { KvilMark } from '../components/KvilMark'
+import { KvilMap } from '../components/KvilMap'
 
 /** Stub: surfaces a Kvil place ahead + the collection. To be built out per impl plan §4.2. */
 export function RouteScreen() {
@@ -28,6 +29,8 @@ export function RouteScreen() {
           Ta deg ein kvil
         </h1>
       </header>
+
+      <KvilMap places={places} />
 
       {ahead && (
         <Link

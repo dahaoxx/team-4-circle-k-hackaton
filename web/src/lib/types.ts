@@ -63,6 +63,8 @@ export interface KvilPlace {
   host: string // the named host
   signature: string // local signature line
   tagline: string // short evocative line
+  lat: number // narrative map position
+  lng: number // narrative map position
   baysFree: number
   baysTotal: number
   topCategories: string[] // from store_transactions
