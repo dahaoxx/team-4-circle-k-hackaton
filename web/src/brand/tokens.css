@@ -10,10 +10,29 @@
 :root {
   /* Kvil chrome — the quiet parent shell */
   --kvil-ink: #1c1a17;
-  --kvil-paper: #f6f1e7;
-  --kvil-line: #e0d8c8;
-  --kvil-muted: #8a8275;
+  --kvil-paper: #fef5e8; /* warm cream — the new main-page backdrop */
+  --kvil-line: #ded6d0;
+  --kvil-muted: #645c56;
   --kvil-accent: #b8472d; /* the warm K red, used sparingly */
+
+  /* New main-page surface system */
+  --kvil-card-line: #ded6d0;
+  --kvil-card-soft: #f9f5f0;
+  --kvil-text-strong: #171616;
+  --kvil-text-soft: #645c56;
+  --kvil-progress: #ee9e4d;
+  /* The soft AI gradient shared by recommendation cards */
+  --kvil-ai-gradient: linear-gradient(
+    270deg,
+    #fee4dc 1%,
+    #fefefe 43%,
+    #f8f2d6 81%,
+    #fdf3fe 100%
+  );
+  /* Pink/amber glow used on the search bar + recommendation card */
+  --kvil-glow: 0px 3px 22px 0px rgba(255, 164, 153, 0.55),
+    3px 3px 14px 0px rgba(252, 203, 87, 0.45),
+    3px 0px 6px 0px rgba(253, 243, 254, 1);
 
   /* Default place palette (overridden per data-place below) */
   --place-bg: #f6f1e7;
