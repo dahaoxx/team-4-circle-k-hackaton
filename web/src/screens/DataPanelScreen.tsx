@@ -15,7 +15,7 @@ const nok = (n: number) =>
   new Intl.NumberFormat('nb-NO', { maximumFractionDigits: 0 }).format(n)
 
 /**
- * The Ops data panel (Epic 4.4): Extra Premium uptake, premium-segment spend
+ * The Ops data panel (Epic 4.4): Kvil Premium uptake, premium-segment spend
  * lift, and Kvil i bil conversion — derived from loyalty_members,
  * store_transactions and charging_sessions via the economics endpoint plus the
  * headline Ops KPIs.
@@ -97,7 +97,7 @@ export function DataPanelScreen() {
       {/* Stat tiles */}
       <div className="grid grid-cols-2 gap-3">
         <Stat
-          label="Extra Premium-opptak"
+          label="Kvil Premium-opptak"
           value={`${OPS_KPIS.extraPremiumUptakePct}%`}
           note={`+${OPS_KPIS.premiumUptakeDeltaPct}% vs forrige kvartal`}
         />

@@ -107,7 +107,7 @@ export function SnoggScreen() {
               </div>
             </div>
             <div className="flex items-center gap-2 rounded-lg bg-[var(--place-soft)] px-3 py-2 text-sm text-[var(--place-ink)]">
-              <KBadge size={18} /> +{Math.round(total)} Extra-poeng · stempel samla
+              <KBadge size={18} /> +{Math.round(total)} Kvil-poeng · stempel samla
             </div>
           </div>
         </PlainCard>

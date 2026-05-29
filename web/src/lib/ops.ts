@@ -16,7 +16,7 @@ export const FIXTURE_OPS_STATIONS: OpsStation[] = [
 
 /** Headline KPIs for the Ops dashboard (Epic 4.4). */
 export const OPS_KPIS = {
-  extraPremiumUptakePct: 21, // share of active members on Extra Premium
+  extraPremiumUptakePct: 21, // share of active members on Kvil Premium
   premiumUptakeDeltaPct: 4, // change vs last quarter
   kvilIBilConversionPct: 38, // plug-ins that convert to a Kvil i bil order
   avgDwellMinChosen: 41, // dwell on a chosen Kvil stop

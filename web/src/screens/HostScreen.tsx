@@ -193,7 +193,7 @@ function Arrivals({ countdown }: { countdown: (min: number) => number }) {
         På veg inn
       </p>
       {arrivals.map((a) => {
-        const premium = a.tier === 'Extra Premium'
+        const premium = a.tier === 'Kvil Premium'
         return (
           <PlainCard key={a.memberName + a.vehicleModel}>
             <div className="flex flex-col gap-2">

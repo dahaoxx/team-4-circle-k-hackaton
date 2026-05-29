@@ -1,6 +1,6 @@
 /**
- * Kvilpasset — Epic 3 (Membership / Extra Premium).
- *   3.1 Join / upgrade to Extra Premium in-app → tiered plans + instant digital pass.
+ * Kvilpasset — Epic 3 (Membership / Kvil Premium).
+ *   3.1 Join / upgrade to Kvil Premium in-app → tiered plans + instant digital pass.
  *   3.2 Recognition on arrival → "du blir kjend att" card (usual + tier).
  *   3.3 Passport of collected places → stamps, progress, unlocked perk.
  */
@@ -66,7 +66,7 @@ export function KvilpassetScreen() {
                   {member.name}
                 </p>
                 <p className="text-sm font-semibold text-[#2b2626]">
-                  Extra Premium
+                  Kvil Premium
                 </p>
               </div>
               <KBadge size={40} />
@@ -95,7 +95,7 @@ export function KvilpassetScreen() {
                 Ta deg ein kvil — utan å tenkje på det.
               </p>
               <p className="text-sm leading-relaxed text-[var(--kvil-text-soft)]">
-                Med Extra Premium står det vanlege klart, ladeøkta er gratis og
+                Med Kvil Premium står det vanlege klart, ladeøkta er gratis og
                 vertskapet kjenner deg att frå første stopp.
               </p>
             </div>
@@ -106,7 +106,7 @@ export function KvilpassetScreen() {
               <div className="flex flex-col gap-3">
                 <div className="flex items-baseline justify-between">
                   <p className="font-display text-lg font-semibold text-[#2b2626]">
-                    Extra
+                    Kvil
                   </p>
                   <p className="text-sm font-semibold text-[#2b2626]">Gratis</p>
                 </div>
@@ -128,7 +128,7 @@ export function KvilpassetScreen() {
                   <div className="flex items-center gap-2">
                     <KBadge size={22} />
                     <p className="font-display text-lg font-semibold text-[#2b2626]">
-                      Extra Premium
+                      Kvil Premium
                     </p>
                   </div>
                   <p className="text-sm font-semibold text-[#2b2626]">
@@ -146,7 +146,7 @@ export function KvilpassetScreen() {
           </div>
 
           <PrimaryButton onClick={upgradeToPremium}>
-            Bli Extra Premium — 149 kr/mnd
+            Bli Kvil Premium — 149 kr/mnd
           </PrimaryButton>
         </>
       )}

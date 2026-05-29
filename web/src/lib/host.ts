@@ -5,9 +5,9 @@
 import type { HostArrival, KitchenTicket } from './types'
 
 export const FIXTURE_ARRIVALS: HostArrival[] = [
-  { memberName: 'Astrid', tier: 'Extra Premium', vehicleModel: 'VW ID.4', etaMin: 2, usual: 'Lom-bolle + kaffi' },
-  { memberName: 'Jonas', tier: 'Extra Premium', vehicleModel: 'Tesla M3', etaMin: 6, usual: 'Gudbrandsdalspølse + cappuccino' },
-  { memberName: 'Lene', tier: 'Extra', vehicleModel: 'Polestar 2', etaMin: 11, usual: 'Rømmegraut med spekemat' },
+  { memberName: 'Astrid', tier: 'Kvil Premium', vehicleModel: 'VW ID.4', etaMin: 2, usual: 'Lom-bolle + kaffi' },
+  { memberName: 'Jonas', tier: 'Kvil Premium', vehicleModel: 'Tesla M3', etaMin: 6, usual: 'Gudbrandsdalspølse + cappuccino' },
+  { memberName: 'Lene', tier: 'Kvil', vehicleModel: 'Polestar 2', etaMin: 11, usual: 'Rømmegraut med spekemat' },
 ]
 
 export const FIXTURE_TICKETS: KitchenTicket[] = [

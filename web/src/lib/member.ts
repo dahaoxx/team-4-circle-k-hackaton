@@ -7,7 +7,7 @@ import type { MemberProfile } from './types'
 export const FIXTURE_MEMBER: MemberProfile = {
   memberId: 'EX-44218',
   name: 'Astrid',
-  tier: 'Extra', // starts on the base program; upgrades to Extra Premium in-app
+  tier: 'Kvil', // starts on the base program; upgrades to Kvil Premium in-app
   vehicleModel: 'VW ID.4',
   batteryKwh: 77,
   socPct: 28,

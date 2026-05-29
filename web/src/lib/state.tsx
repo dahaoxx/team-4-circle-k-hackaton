@@ -34,7 +34,7 @@ export function KvilProvider({ children }: { children: ReactNode }) {
   const [lastOrder, setLastOrder] = useState<PlacedOrder | null>(null)
 
   const upgradeToPremium = useCallback(() => {
-    setMember((m) => ({ ...m, tier: 'Extra Premium' }))
+    setMember((m) => ({ ...m, tier: 'Kvil Premium' }))
   }, [])
 
   const collectPlace = useCallback((placeId: string) => {
@@ -49,7 +49,7 @@ export function KvilProvider({ children }: { children: ReactNode }) {
   const value = useMemo<KvilState>(
     () => ({
       member,
-      isPremium: member.tier === 'Extra Premium',
+      isPremium: member.tier === 'Kvil Premium',
       collected,
       lastOrder,
       upgradeToPremium,

@@ -101,7 +101,7 @@ export interface KvilPlace {
 export interface MemberProfile {
   memberId: string
   name: string
-  tier: 'Extra' | 'Extra Premium'
+  tier: 'Kvil' | 'Kvil Premium'
   vehicleModel: string
   batteryKwh: number
   socPct: number
