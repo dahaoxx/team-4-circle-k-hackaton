@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { KvilPlace } from '../lib/types'
+import { api } from '../lib/api'
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
 const MAPBOX_STYLE = import.meta.env.VITE_MAPBOX_STYLE as string | undefined
@@ -63,6 +64,7 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<L.Map | null>(null)
   const layerRef = useRef<L.LayerGroup | null>(null)
+  const stationsLayerRef = useRef<L.LayerGroup | null>(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -75,6 +77,8 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
       attributionControl: true,
     })
     tileLayer().addTo(map)
+    // Add the generic-stations layer FIRST so branded Kvil pins stack on top.
+    stationsLayerRef.current = L.layerGroup().addTo(map)
     layerRef.current = L.layerGroup().addTo(map)
     mapRef.current = map
 
@@ -82,6 +86,35 @@ export function KvilMap({ places }: { places: KvilPlace[] }) {
       map.remove()
       mapRef.current = null
       layerRef.current = null
+      stationsLayerRef.current = null
+    }
+  }, [])
+
+  // Fetch every real Circle K station once and draw them as small muted dots.
+  // Offline-proof: getStations() returns [] on failure, so the map still works.
+  useEffect(() => {
+    let cancelled = false
+    api.getStations().then((stations) => {
+      const group = stationsLayerRef.current
+      if (cancelled || !group) return
+      group.clearLayers()
+      stations.forEach((s) => {
+        if (!s.lat || !s.lng) return // skip missing/zero coords
+        L.circleMarker([s.lat, s.lng], {
+          radius: 4,
+          color: '#8a8378',
+          weight: 1,
+          fillColor: '#a39c90',
+          fillOpacity: 0.5,
+          opacity: 0.5,
+          interactive: true,
+        })
+          .bindTooltip(s.name, { direction: 'top' })
+          .addTo(group)
+      })
+    })
+    return () => {
+      cancelled = true
     }
   }, [])
 

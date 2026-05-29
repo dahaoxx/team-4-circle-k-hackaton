@@ -11,13 +11,14 @@ export const FIXTURE_PLACES = PLACE_LIST
 export const FIXTURE_CHARGE_ESTIMATE: ChargeEstimate = {
   stationId: 'CK-NO-021',
   stationName: 'Brygga i Lærdal',
-  minutes: 14,
+  minutes: 17,
   fromSoc: 28,
   toSoc: 80,
-  kwhToAdd: 31.2,
+  kwhToAdd: 40.0,
   chargerKw: 150,
-  weather: 'Clear, 4°C',
-  derateApplied: false,
+  weather: 'Snø · −6 °C',
+  derateApplied: true,
+  coldPenaltyMin: 3,
 }
 
 export const FIXTURE_ECONOMICS: KvilpassetEconomics = {

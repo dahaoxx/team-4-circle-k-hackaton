@@ -13,13 +13,23 @@ export const PLACES: Record<string, KvilPlace> = {
     city: 'Lørenskog',
     region: 'Østlandet',
     host: 'Ingrid',
-    signature: 'A real bakery with a bun worth the E6 detour',
-    tagline: "Norway's busiest rest stop, reimagined",
+    signature: 'Eit ekte bakeri med ein bolle verd E6-svingen',
+    tagline: 'Noregs travlaste raststad, tenkt på nytt',
     lat: 60.3225, // Nebbenes rest stop, E6 north of Oslo
     lng: 11.1772,
     baysFree: 6,
     baysTotal: 15,
-    topCategories: ['Bakery', 'Coffee', 'Hot food'],
+    topCategories: ['Bakeri', 'Kaffi', 'Varmmat'],
+    detourMin: 12,
+    fastChargerKw: 350,
+    estWaitMin: 4,
+    amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: true },
+    photo: '/boller.png',
+    menu: [
+      { id: 'lombolle', name: 'Lom-bolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4, signature: true },
+      { id: 'kanelsnurr', name: 'Kanelsnurr', priceNok: 42, sourcing: 'Surdeig, lokalt smør', readyMin: 5 },
+      { id: 'kardemomme', name: 'Kardemommebolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4 },
+    ],
   },
   laerdal: {
     id: 'laerdal',
@@ -28,13 +38,23 @@ export const PLACES: Record<string, KvilPlace> = {
     city: 'Ålesund',
     region: 'Vestlandet',
     host: 'Sander',
-    signature: 'Local cider, smoked trout, apples',
-    tagline: 'A fjord-side stop that tastes of the fjord',
+    signature: 'Lokal sider, røykt aure, eple',
+    tagline: 'Ein fjordstopp som smakar av fjorden',
     lat: 61.1006, // Lærdal, inner Sognefjord
     lng: 7.4806,
     baysFree: 4,
     baysTotal: 5,
-    topCategories: ['Local food', 'Coffee', 'Cider'],
+    topCategories: ['Lokalmat', 'Kaffi', 'Sider'],
+    detourMin: 40,
+    fastChargerKw: 150,
+    estWaitMin: 0,
+    amenities: { kitchen: true, fireplace: false, seating: true, wifi: true, carwash: false },
+    photo: '/boller.png',
+    menu: [
+      { id: 'aure', name: 'Røykt aure-smørbrød', priceNok: 89, sourcing: 'Røykt i Lærdal', readyMin: 6, signature: true },
+      { id: 'sider', name: 'Lærdalseple-sider', priceNok: 59, sourcing: 'Pressa på garden', readyMin: 1 },
+      { id: 'flatbrod', name: 'Flatbrød & brunost', priceNok: 49, sourcing: 'Bakt på staden', readyMin: 3 },
+    ],
   },
   dombas: {
     id: 'dombas',
@@ -43,13 +63,23 @@ export const PLACES: Record<string, KvilPlace> = {
     city: 'Trysil',
     region: 'Innlandet',
     host: 'Marit',
-    signature: 'A mountain-cabin room for the Dovre crossing — fireplace and all',
-    tagline: 'The pause that warms the crossing',
+    signature: 'Eit fjellstove-rom for Dovre-kryssinga — med peis',
+    tagline: 'Pausen som varmar kryssinga',
     lat: 62.0742, // Dombås, gateway to the Dovre crossing
     lng: 9.1281,
     baysFree: 3,
     baysTotal: 6,
-    topCategories: ['Hot drinks', 'Bakery', 'Warm meals'],
+    topCategories: ['Varm drikke', 'Bakeri', 'Varmmat'],
+    detourMin: 25,
+    fastChargerKw: 150,
+    estWaitMin: 2,
+    amenities: { kitchen: true, fireplace: true, seating: true, wifi: true, carwash: false },
+    photo: '/boller.png',
+    menu: [
+      { id: 'fjellgrot', name: 'Fjellgrøt med rømme', priceNok: 79, sourcing: 'Havre frå Dovre', readyMin: 7, signature: true },
+      { id: 'kakao', name: 'Varm kakao med krem', priceNok: 49, sourcing: 'Laga på staden', readyMin: 3 },
+      { id: 'lapper', name: 'Lapper med tyttebær', priceNok: 55, sourcing: 'Tyttebær frå fjellet', readyMin: 5 },
+    ],
   },
   lofoten: {
     id: 'lofoten',
@@ -58,14 +88,29 @@ export const PLACES: Record<string, KvilPlace> = {
     city: 'Bodø',
     region: 'Nord-Norge',
     host: 'Even',
-    signature: 'Coffee, cod, and the light',
-    tagline: 'Where the road meets the sea',
+    signature: 'Kaffi, torsk og lyset',
+    tagline: 'Der vegen møter havet',
     lat: 68.2342, // Kaia, Lofoten (Svolvær)
     lng: 14.5641,
     baysFree: 2,
     baysTotal: 4,
-    topCategories: ['Seafood', 'Coffee', 'Bakery'],
+    topCategories: ['Sjømat', 'Kaffi', 'Bakeri'],
+    detourMin: 60,
+    fastChargerKw: 50,
+    estWaitMin: 0,
+    amenities: { kitchen: true, fireplace: false, seating: true, wifi: false, carwash: false },
+    photo: '/boller.png',
+    menu: [
+      { id: 'fiskekaker', name: 'Fiskekaker i lompe', priceNok: 85, sourcing: 'Torsk frå Lofoten', readyMin: 6, signature: true },
+      { id: 'bolle', name: 'Kanelbolle', priceNok: 39, sourcing: 'Bakt i dag', readyMin: 4 },
+      { id: 'torrfisk', name: 'Kaffi & tørrfisk-snack', priceNok: 45, sourcing: 'Hengt på Kaia', readyMin: 2 },
+    ],
   },
 }
 
 export const PLACE_LIST: KvilPlace[] = Object.values(PLACES)
+
+/** Look up a single curated menu item across all places. */
+export function findMenuItem(placeId: string, itemId: string): import('./types').MenuItem | undefined {
+  return PLACES[placeId]?.menu.find((m) => m.id === itemId)
+}

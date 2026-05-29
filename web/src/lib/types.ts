@@ -53,6 +53,25 @@ export interface LoyaltyMember {
 
 // --- Kvil concept shapes (custom endpoints, see impl plan §3) ----------------
 
+/** A short, curated Kvil menu item (drives Snøgg pre-order + trust pricing). */
+export interface MenuItem {
+  id: string
+  name: string
+  priceNok: number
+  sourcing: string // "Bakt i Lom i dag" — the craft/of-this-place line
+  readyMin: number // minutes to prepare
+  signature?: boolean // the place's hero product
+}
+
+/** Real station amenities used for discovery filters (Epic 1.2). */
+export interface PlaceAmenities {
+  kitchen: boolean
+  fireplace: boolean
+  seating: boolean
+  wifi: boolean
+  carwash: boolean
+}
+
 /** One curated Kvil place, enriched from a real station. */
 export interface KvilPlace {
   id: string // slug, e.g. "laerdal"
@@ -68,6 +87,54 @@ export interface KvilPlace {
   baysFree: number
   baysTotal: number
   topCategories: string[] // from store_transactions
+  detourMin: number // "40 min fram"
+  fastChargerKw: number // best charger output
+  estWaitMin: number // honest queue estimate (Epic 5.2)
+  amenities: PlaceAmenities
+  photo: string // hero image
+  menu: MenuItem[]
+}
+
+// --- Member / host / ops shapes (demo fixtures) ------------------------------
+
+/** The signed-in driver's profile (recognition, usual order, battery). */
+export interface MemberProfile {
+  memberId: string
+  name: string
+  tier: 'Extra' | 'Extra Premium'
+  vehicleModel: string
+  batteryKwh: number
+  socPct: number
+  usual: { placeId: string; itemId: string; label: string }
+}
+
+/** An arriving member shown to the host (Epic 4.2). */
+export interface HostArrival {
+  memberName: string
+  tier: string
+  vehicleModel: string
+  etaMin: number
+  usual: string
+}
+
+/** A Kvil i bil kitchen ticket sequenced by charge-complete time (Epic 4.1). */
+export interface KitchenTicket {
+  id: string
+  memberName: string
+  bay: number
+  items: string[]
+  chargeCompleteMin: number // minutes until the car is done
+  prepMin: number // how long the kitchen needs
+  status: 'queued' | 'firing' | 'ready' | 'delivered'
+}
+
+/** A station Ops can designate as a Kvil place (Epic 4.3). */
+export interface OpsStation {
+  stationId: string
+  name: string
+  region: string
+  isKvil: boolean
+  signature: string
 }
 
 /** The Snøgg charge-time window. */
@@ -81,6 +148,7 @@ export interface ChargeEstimate {
   chargerKw: number
   weather: string
   derateApplied: boolean
+  coldPenaltyMin?: number // extra minutes from the cold-weather derate (Epic 2.1)
 }
 
 /** Kvilpasset economics for the data panel. */

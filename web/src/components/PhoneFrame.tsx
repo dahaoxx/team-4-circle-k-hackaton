@@ -15,7 +15,7 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
         {/* status bar */}
         <div className="flex items-center justify-between px-7 pt-3 pb-1 text-xs font-medium text-[var(--kvil-ink)]">
           <span>09:41</span>
-          <span className="font-serif-kvil text-sm tracking-wide">Kvil</span>
+          <span className="font-display text-sm font-semibold tracking-wide">Kvil</span>
           <span>100%</span>
         </div>
 
