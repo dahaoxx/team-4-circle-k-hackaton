@@ -5,12 +5,11 @@ const TABS: { to: string; label: string; icon: ReactNode; end: boolean }[] = [
   { to: '/', label: 'Vegen', icon: <RouteIcon />, end: true },
   { to: '/kvilpasset', label: 'Passet', icon: <PassIcon />, end: false },
   { to: '/host', label: 'Vert', icon: <HostIcon />, end: false },
-  { to: '/data', label: 'Data', icon: <DataIcon />, end: false },
 ]
 
 export function BottomNav() {
   return (
-    <nav className="grid grid-cols-4 border-t border-[var(--kvil-line)] bg-[var(--kvil-paper)]">
+    <nav className="grid grid-cols-3 border-t border-[var(--kvil-line)] bg-[var(--kvil-paper)]">
       {TABS.map((t) => (
         <NavLink
           key={t.to}
@@ -72,16 +71,6 @@ function HostIcon() {
         strokeWidth="2"
         strokeLinecap="round"
       />
-    </svg>
-  )
-}
-
-/** Data — insights / bar chart. */
-function DataIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 20h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M7 20v-6M12 20V6M17 20v-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
 }
