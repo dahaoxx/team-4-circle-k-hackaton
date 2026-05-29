@@ -1,0 +1,2916 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Circle K Hackathon API",
+        "version": "1.0.0",
+        "description": "REST API over a synthetic Circle K Norge dataset. Each deployed instance has its own mutable copy of the data \u2014 feel free to create, update, and delete records. Use POST /api/admin/reset to restore the original seed."
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "this instance"
+        }
+    ],
+    "tags": [
+        {
+            "name": "meta",
+            "description": "Dataset-wide metadata and admin"
+        },
+        {
+            "name": "admin",
+            "description": "Reset and export"
+        },
+        {
+            "name": "stations",
+            "description": "Physical Circle K stations across Norway"
+        },
+        {
+            "name": "loyalty_members",
+            "description": "Loyalty programme members"
+        },
+        {
+            "name": "charging_sessions",
+            "description": "EV charging sessions"
+        },
+        {
+            "name": "fuel_transactions",
+            "description": "Fuel pump transactions"
+        },
+        {
+            "name": "store_transactions",
+            "description": "In-store retail transactions"
+        },
+        {
+            "name": "carwash_visits",
+            "description": "Carwash visits"
+        },
+        {
+            "name": "app_events",
+            "description": "Mobile app events"
+        },
+        {
+            "name": "employees",
+            "description": "Station employees"
+        },
+        {
+            "name": "weather_observations",
+            "description": "Weather observations per station"
+        }
+    ],
+    "paths": {
+        "/api/stations": {
+            "get": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "List stations",
+                "description": "Physical Circle K stations across Norway. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Stations"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "Create a stations item",
+                "description": "If station_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Stations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/stations/{id}": {
+            "get": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "Get one stations item by station_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "station_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "Replace a stations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "station_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Stations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "Partially update a stations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "station_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Stations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "stations"
+                ],
+                "summary": "Delete a stations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "station_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/loyalty_members": {
+            "get": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "List loyalty_members",
+                "description": "Loyalty programme members. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/LoyaltyMembers"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "Create a loyalty_members item",
+                "description": "If member_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoyaltyMembers"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/loyalty_members/{id}": {
+            "get": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "Get one loyalty_members item by member_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "member_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "Replace a loyalty_members item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "member_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoyaltyMembers"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "Partially update a loyalty_members item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "member_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoyaltyMembers"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "loyalty_members"
+                ],
+                "summary": "Delete a loyalty_members item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "member_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoyaltyMembers"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/charging_sessions": {
+            "get": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "List charging_sessions",
+                "description": "EV charging sessions. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ChargingSessions"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "Create a charging_sessions item",
+                "description": "If session_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChargingSessions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/charging_sessions/{id}": {
+            "get": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "Get one charging_sessions item by session_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "session_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "Replace a charging_sessions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "session_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChargingSessions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "Partially update a charging_sessions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "session_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChargingSessions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "charging_sessions"
+                ],
+                "summary": "Delete a charging_sessions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "session_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargingSessions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/fuel_transactions": {
+            "get": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "List fuel_transactions",
+                "description": "Fuel pump transactions. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FuelTransactions"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "Create a fuel_transactions item",
+                "description": "If transaction_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FuelTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/fuel_transactions/{id}": {
+            "get": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "Get one fuel_transactions item by transaction_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "Replace a fuel_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FuelTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "Partially update a fuel_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FuelTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "fuel_transactions"
+                ],
+                "summary": "Delete a fuel_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FuelTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/store_transactions": {
+            "get": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "List store_transactions",
+                "description": "In-store retail transactions. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StoreTransactions"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "Create a store_transactions item",
+                "description": "If transaction_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/store_transactions/{id}": {
+            "get": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "Get one store_transactions item by transaction_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "Replace a store_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "Partially update a store_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTransactions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "store_transactions"
+                ],
+                "summary": "Delete a store_transactions item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "transaction_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreTransactions"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/carwash_visits": {
+            "get": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "List carwash_visits",
+                "description": "Carwash visits. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CarwashVisits"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "Create a carwash_visits item",
+                "description": "If visit_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarwashVisits"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/carwash_visits/{id}": {
+            "get": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "Get one carwash_visits item by visit_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "visit_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "Replace a carwash_visits item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "visit_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarwashVisits"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "Partially update a carwash_visits item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "visit_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarwashVisits"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "carwash_visits"
+                ],
+                "summary": "Delete a carwash_visits item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "visit_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarwashVisits"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/app_events": {
+            "get": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "List app_events",
+                "description": "Mobile app events. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AppEvents"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "Create a app_events item",
+                "description": "If event_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AppEvents"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/app_events/{id}": {
+            "get": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "Get one app_events item by event_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "event_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "Replace a app_events item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "event_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AppEvents"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "Partially update a app_events item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "event_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AppEvents"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "app_events"
+                ],
+                "summary": "Delete a app_events item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "event_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppEvents"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/employees": {
+            "get": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "List employees",
+                "description": "Station employees. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Employees"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "Create a employees item",
+                "description": "If employee_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Employees"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/employees/{id}": {
+            "get": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "Get one employees item by employee_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "employee_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "Replace a employees item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "employee_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Employees"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "Partially update a employees item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "employee_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Employees"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "employees"
+                ],
+                "summary": "Delete a employees item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "employee_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/weather_observations": {
+            "get": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "List weather_observations",
+                "description": "Weather observations per station. Filter by any top-level scalar field as a query parameter (e.g. ?city=Oslo). Use ?q= for substring search across all fields.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Substring search across all fields"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "offset": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/WeatherObservations"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "Create a weather_observations item",
+                "description": "If observation_id is omitted, the server generates one.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WeatherObservations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "ID conflict"
+                    }
+                }
+            }
+        },
+        "/api/weather_observations/{id}": {
+            "get": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "Get one weather_observations item by observation_id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "observation_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "Replace a weather_observations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "observation_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WeatherObservations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Replaced",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created (id did not exist)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "Partially update a weather_observations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "observation_id value"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WeatherObservations"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "weather_observations"
+                ],
+                "summary": "Delete a weather_observations item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "observation_id value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherObservations"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/metadata": {
+            "get": {
+                "tags": [
+                    "meta"
+                ],
+                "summary": "Dataset metadata (read-only)",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/strategic-context": {
+            "get": {
+                "tags": [
+                    "meta"
+                ],
+                "summary": "Strategic context block (read-only)",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/admin/reset": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Reset state from the seed dataset",
+                "responses": {
+                    "200": {
+                        "description": "Reset OK"
+                    }
+                }
+            }
+        },
+        "/api/admin/export": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Download the current state as JSON",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "tags": [
+                    "meta"
+                ],
+                "summary": "Healthcheck",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Stations": {
+                "type": "object",
+                "properties": {
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Circle K Oslo"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Oslo"
+                    },
+                    "region": {
+                        "type": "string",
+                        "example": "\u00d8stlandet"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "urban"
+                    },
+                    "manned": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "lat": {
+                        "type": "number",
+                        "example": 59.92007
+                    },
+                    "lng": {
+                        "type": "number",
+                        "example": 10.77069
+                    },
+                    "fuel_pumps": {
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "ev_chargers": {
+                        "type": "object",
+                        "properties": {
+                            "50kW": {
+                                "type": "integer",
+                                "example": 0
+                            },
+                            "150kW": {
+                                "type": "integer",
+                                "example": 4
+                            },
+                            "350kW": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "total": {
+                                "type": "integer",
+                                "example": 5
+                            }
+                        }
+                    },
+                    "has_carwash": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "has_kitchen": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "has_extra_seating": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "opened_date": {
+                        "type": "string",
+                        "example": "2004-12-04"
+                    }
+                }
+            },
+            "LoyaltyMembers": {
+                "type": "object",
+                "properties": {
+                    "member_id": {
+                        "type": "string",
+                        "example": "M-10000"
+                    },
+                    "extra_member": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "joined_date": {
+                        "type": "string",
+                        "example": "2024-05-02"
+                    },
+                    "tier": {
+                        "type": "string",
+                        "example": "Gold"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "age_band": {
+                        "type": "string",
+                        "example": "45-54"
+                    },
+                    "vehicle_type": {
+                        "type": "string",
+                        "example": "EV"
+                    },
+                    "vehicle_model": {
+                        "type": "string",
+                        "example": "Audi Q4 e-tron"
+                    },
+                    "battery_kwh": {
+                        "type": "integer",
+                        "example": 82
+                    },
+                    "avg_visits_per_month": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "lifetime_spent_nok": {
+                        "type": "integer",
+                        "example": 15027
+                    },
+                    "preferred_station_id": {
+                        "type": "string",
+                        "example": "CK-NO-015"
+                    },
+                    "opt_in_marketing": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "opt_in_personalisation": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "app_user": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "ChargingSessions": {
+                "type": "object",
+                "properties": {
+                    "session_id": {
+                        "type": "string",
+                        "example": "CS-100000"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-012"
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "example": "M-10108"
+                    },
+                    "started_at": {
+                        "type": "string",
+                        "example": "2026-04-26T16:08:00Z"
+                    },
+                    "duration_min": {
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "kwh_delivered": {
+                        "type": "number",
+                        "example": 42.2
+                    },
+                    "charger_max_kw": {
+                        "type": "integer",
+                        "example": 150
+                    },
+                    "avg_session_kw": {
+                        "type": "number",
+                        "example": 140.7
+                    },
+                    "price_per_kwh_nok": {
+                        "type": "number",
+                        "example": 6.86
+                    },
+                    "amount_nok": {
+                        "type": "number",
+                        "example": 289.49
+                    },
+                    "entered_store": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "store_spent_nok": {
+                        "type": "number",
+                        "example": 69.57
+                    },
+                    "payment_method": {
+                        "type": "string",
+                        "example": "fleet_card"
+                    },
+                    "weekday": {
+                        "type": "string",
+                        "example": "Sunday"
+                    },
+                    "hour_of_day": {
+                        "type": "integer",
+                        "example": 16
+                    }
+                }
+            },
+            "FuelTransactions": {
+                "type": "object",
+                "properties": {
+                    "transaction_id": {
+                        "type": "string",
+                        "example": "FT-200000"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-014"
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2026-04-21T18:24:00Z"
+                    },
+                    "fuel_type": {
+                        "type": "string",
+                        "example": "gasoline_95"
+                    },
+                    "litres": {
+                        "type": "number",
+                        "example": 63.2
+                    },
+                    "price_per_litre_nok": {
+                        "type": "number",
+                        "example": 22.15
+                    },
+                    "amount_nok": {
+                        "type": "number",
+                        "example": 1399.88
+                    },
+                    "payment_method": {
+                        "type": "string",
+                        "example": "fleet_card"
+                    },
+                    "linked_carwash_purchase": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "linked_store_purchase": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "StoreTransactions": {
+                "type": "object",
+                "properties": {
+                    "transaction_id": {
+                        "type": "string",
+                        "example": "ST-300000"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-022"
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "example": "M-10104"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2026-05-06T07:21:00Z"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "Tea"
+                                },
+                                "price_nok": {
+                                    "type": "integer",
+                                    "example": 35
+                                },
+                                "category": {
+                                    "type": "string",
+                                    "example": "beverage_hot"
+                                }
+                            }
+                        }
+                    },
+                    "total_nok": {
+                        "type": "integer",
+                        "example": 35
+                    },
+                    "payment_method": {
+                        "type": "string",
+                        "example": "app"
+                    },
+                    "during_charging_session": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "hour_of_day": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "weekday": {
+                        "type": "string",
+                        "example": "Wednesday"
+                    }
+                }
+            },
+            "CarwashVisits": {
+                "type": "object",
+                "properties": {
+                    "visit_id": {
+                        "type": "string",
+                        "example": "CW-400000"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-004"
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "example": "M-10035"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2026-05-24T18:54:00Z"
+                    },
+                    "wash_type": {
+                        "type": "string",
+                        "example": "monthly_subscription"
+                    },
+                    "amount_nok": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "is_subscription": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "AppEvents": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "example": "AE-500000"
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "example": "M-10001"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2026-05-21T11:42:00Z"
+                    },
+                    "event_type": {
+                        "type": "string",
+                        "example": "start_charge"
+                    },
+                    "session_duration_seconds": {
+                        "type": "integer",
+                        "example": 108
+                    },
+                    "platform": {
+                        "type": "string",
+                        "example": "ios"
+                    }
+                }
+            },
+            "Employees": {
+                "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string",
+                        "example": "E-0001"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-001"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "shift_lead"
+                    },
+                    "shift_pattern": {
+                        "type": "string",
+                        "example": "weekend"
+                    },
+                    "tenure_months": {
+                        "type": "integer",
+                        "example": 95
+                    },
+                    "is_full_time": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "trained_barista": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "trained_kitchen": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "WeatherObservations": {
+                "type": "object",
+                "properties": {
+                    "observation_id": {
+                        "type": "string",
+                        "example": "WX-CK-NO-002-20260501"
+                    },
+                    "station_id": {
+                        "type": "string",
+                        "example": "CK-NO-002"
+                    },
+                    "date": {
+                        "type": "string",
+                        "example": "2026-05-01"
+                    },
+                    "temp_c": {
+                        "type": "number",
+                        "example": 15.5
+                    },
+                    "precipitation_mm": {
+                        "type": "number",
+                        "example": 5.5
+                    },
+                    "snow": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "wind_ms": {
+                        "type": "number",
+                        "example": 1.8
+                    },
+                    "conditions": {
+                        "type": "string",
+                        "example": "overcast"
+                    }
+                }
+            }
+        }
+    }
+}
