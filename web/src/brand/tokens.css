@@ -1,0 +1,60 @@
+/*
+ * Kvil brand tokens.
+ *
+ * The neutral "Kvil chrome" is the unifying shell (status bar, nav, the small
+ * "eit Kvil-sted" mark). Each place gets its own palette so it can "be itself" —
+ * screens switch palette by setting `data-place="<id>"` on a container, which
+ * remaps the --place-* variables consumed by the UI.
+ */
+
+:root {
+  /* Kvil chrome — the quiet parent shell */
+  --kvil-ink: #1c1a17;
+  --kvil-paper: #f6f1e7;
+  --kvil-line: #e0d8c8;
+  --kvil-muted: #8a8275;
+  --kvil-accent: #b8472d; /* the warm K red, used sparingly */
+
+  /* Default place palette (overridden per data-place below) */
+  --place-bg: #f6f1e7;
+  --place-surface: #ffffff;
+  --place-ink: #1c1a17;
+  --place-accent: #b8472d;
+  --place-soft: #efe7d6;
+}
+
+/* Bakeriet på Nebbenes — bakery cream */
+[data-place='nebbenes'] {
+  --place-bg: #f7efe1;
+  --place-surface: #fffaf0;
+  --place-ink: #3a2c1c;
+  --place-accent: #c9892f;
+  --place-soft: #efe1c8;
+}
+
+/* Brygga i Lærdal — fjord blue-green */
+[data-place='laerdal'] {
+  --place-bg: #e8f0ee;
+  --place-surface: #f6fbf9;
+  --place-ink: #14302c;
+  --place-accent: #1f6f63;
+  --place-soft: #d3e6e1;
+}
+
+/* Stova på Dombås — warm wood / amber */
+[data-place='dombas'] {
+  --place-bg: #efe6db;
+  --place-surface: #fbf4ea;
+  --place-ink: #2e2014;
+  --place-accent: #a85a26;
+  --place-soft: #e3d2bd;
+}
+
+/* Kaia i Lofoten — cold coastal light */
+[data-place='lofoten'] {
+  --place-bg: #e9eef1;
+  --place-surface: #f7fafc;
+  --place-ink: #1a2730;
+  --place-accent: #2f6d8c;
+  --place-soft: #d6e2e9;
+}

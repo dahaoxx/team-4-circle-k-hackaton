@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@import './brand/tokens.css';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #2a2722; /* dark backdrop so the phone frame reads as a device */
+  color: var(--kvil-ink);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A warm serif for Kvil headings — falls back to system serif. */
+.font-serif-kvil {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman',
+    serif;
+}
