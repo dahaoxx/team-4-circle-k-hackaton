@@ -132,7 +132,7 @@ export function PlaceScreen() {
               navigate(`/snogg?place=${place.id}&item=${member.usual.itemId}&reorder=1`)
             }
           >
-            Bestill «det vanlige» på nytt — {member.usual.label}
+            Bestill «det vanlige»
           </PrimaryButton>
         )}
         <PrimaryButton to={`/plug-in?place=${place.id}`}>Plugg inn her</PrimaryButton>
